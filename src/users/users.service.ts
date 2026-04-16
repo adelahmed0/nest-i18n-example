@@ -4,7 +4,6 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
-import { MongoIdDto } from './dtos/mongo-id.dto';
 
 @Injectable()
 export class UserService {
@@ -15,7 +14,7 @@ export class UserService {
     return users;
   }
 
-  async findUserById(id: MongoIdDto): Promise<User> {
+  async findUserById(id: string): Promise<User> {
     const user = await this.userModel.findById(id);
     if (!user) {
       throw new NotFoundException(`Not found user ${id}`);
@@ -28,10 +27,7 @@ export class UserService {
     return createUser;
   }
 
-  async updateUser(
-    id: MongoIdDto,
-    updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
       updateUserDto,
