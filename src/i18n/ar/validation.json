@@ -1,0 +1,7 @@
+{
+  "NOT_EMPTY": "{property} لا يمكن أن يكون فارغًا",
+  "INVALID_EMAIL": "البريد الإلكتروني غير صالح",
+  "INVALID_BOOLEAN": "{property} يجب أن يكون قيمة منطقية",
+  "MIN": "{property} يجب أن يكون على الأقل {constraints.0}",
+  "MAX": "{property} يجب أن يكون على الأكثر {constraints.0}"
+}
