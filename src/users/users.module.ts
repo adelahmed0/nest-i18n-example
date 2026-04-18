@@ -5,10 +5,23 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/user.schema';
 import { MongoModule } from '../mongo/mongo.module';
 import { CustomI18nService } from '../custom-i18n.service';
+import * as mongooseI18nLocalize from 'mongoose-i18n-localize';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: User.name,
+        useFactory: () => {
+          const schema = UserSchema;
+          schema.plugin(mongooseI18nLocalize, {
+            locales: ['en', 'ar'],
+            defaultLocale: 'en',
+          });
+          return schema;
+        },
+      },
+    ]),
     MongoModule,
   ],
   controllers: [UsersController],
