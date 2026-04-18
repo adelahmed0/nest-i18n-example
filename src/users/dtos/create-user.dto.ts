@@ -1,5 +1,13 @@
-import { IsDefined, IsEmail, IsString, Length } from 'class-validator';
+import {
+  IsDefined,
+  IsEmail,
+  IsString,
+  Length,
+  ValidateNested,
+} from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
+import { FieldLocalizedDto } from '../../shared/dtos/field-localized.dto';
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsString()
@@ -10,7 +18,9 @@ export class CreateUserDto {
   readonly email: string;
 
   @IsDefined()
-  readonly country: string;
+  @Type(() => FieldLocalizedDto)
+  @ValidateNested()
+  readonly country: FieldLocalizedDto;
 
   @IsString()
   readonly password: string;
