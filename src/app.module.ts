@@ -9,6 +9,7 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import * as path from 'path';
+import { CustomI18nService } from './custom-i18n.service';
 
 @Module({
   imports: [
@@ -28,6 +29,6 @@ import * as path from 'path';
     UsersModule,
     MongoModule,
   ],
-  providers: [],
+  providers: [CustomI18nService],
 })
 export class AppModule {}

@@ -4,13 +4,13 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
-import { I18nContext, I18nService } from 'nestjs-i18n';
+import { CustomI18nService } from '../custom-i18n.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
-    private readonly i18n: I18nService,
+    private readonly i18n: CustomI18nService,
   ) {}
 
   async findUsers(): Promise<User[]> {
@@ -22,9 +22,7 @@ export class UserService {
     const user = await this.userModel.findById(id);
     if (!user) {
       // throw new NotFoundException(`Not found user ${id}`);
-      throw new NotFoundException(
-        this.i18n.t('test.NOT_FOUND', { lang: I18nContext.current().lang }),
-      );
+      throw new NotFoundException(this.i18n.translate('test.NOT_FOUND'));
     }
     return user;
   }
