@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { CustomI18nService } from '../custom-i18n.service';
+import { I18nContext } from 'nestjs-i18n/dist';
 
 @Injectable()
 export class UserService {
@@ -15,7 +16,11 @@ export class UserService {
 
   async findUsers(): Promise<User[]> {
     const users = await this.userModel.find();
-    return users;
+    const localizedUsers = this.userModel.schema.methods.toJSONLocalizedOnly(
+      users,
+      I18nContext.current().lang,
+    );
+    return localizedUsers;
   }
 
   async findUserById(id: string): Promise<User> {
